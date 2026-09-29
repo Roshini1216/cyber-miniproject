@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CIA Triad Security Risk Assessment</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7FB2FF" stroke-width="2" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>
+    <span>CIA Risk Assessor</span>
+  </div>
+  <nav>
+    <button class="tab active" data-tab="assess">Assessment</button>
+    <button class="tab" data-tab="live">Live checks</button>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-in">
+    <h2>Security risk assessment</h2>
+    <p>Rate your assets, mark the controls you already have, and check each asset's risk one at a time.</p>
+    <div class="triad">
+      <div class="t c"><b>Confidentiality</b><span>Only the right people can see the data</span></div>
+      <div class="t i"><b>Integrity</b><span>Data stays accurate and unchanged</span></div>
+      <div class="t a"><b>Availability</b><span>Systems work when users need them</span></div>
+    </div>
+  </div>
+</section>
+
+<main>
+<section id="assess" class="panel">
+  <div class="card">
+    <h3 class="title"><span class="step">1</span>Add assets</h3>
+    <p class="hint">Rate how much each asset matters for Confidentiality, Integrity and Availability (1 = low, 5 = critical).</p>
+    <div class="row">
+      <input id="aname" placeholder="Asset name, e.g. Student database">
+      <label class="c">C <input id="ac" type="number" min="1" max="5" value="3"></label>
+      <label class="i">I <input id="ai" type="number" min="1" max="5" value="3"></label>
+      <label class="a">A <input id="aa" type="number" min="1" max="5" value="3"></label>
+      <button id="addAsset">Add asset</button>
+      <button id="sample" class="ghost">Load sample assets</button>
+    </div>
+    <table id="assetTable"><thead><tr><th>Asset</th><th>C</th><th>I</th><th>A</th><th></th></tr></thead><tbody></tbody></table>
+  </div>
+
+  <div class="card">
+    <h3 class="title"><span class="step">2</span>Security controls in place</h3>
+    <p class="hint">Tick every control your system already has.</p>
+    <div id="controls"></div>
+  </div>
+
+  <div class="card">
+    <h3 class="title"><span class="step">3</span>Check one asset at a time</h3>
+    <p class="hint">Pick an asset below, then calculate its risk. Use Previous / Next to move to the other assets.</p>
+    <div class="row">
+      <button id="prevAsset" class="ghost">◀ Previous</button>
+      <select id="assetSelect"></select>
+      <button id="nextAsset" class="ghost">Next ▶</button>
+      <button id="run" class="primary" style="flex:1;min-width:160px;margin:0">Calculate risk for this asset</button>
+    </div>
+  </div>
+
+  <div id="results" hidden>
+    <div class="card">
+      <h3 class="title" id="resultTitle">Result</h3>
+      <div id="overall"></div>
+      <div id="bars"></div>
+    </div>
+    <div class="card">
+      <h3 class="title">Recommendations</h3>
+      <ul id="recs"></ul>
+      <button id="print" class="ghost">Save as PDF / Print</button>
+    </div>
+  </div>
+</section>
+
+<section id="live" class="panel" hidden>
+  <div class="card cc">
+    <h3 class="title">Confidentiality: password strength</h3>
+    <input id="pw" type="text" placeholder="Type a password to test">
+    <div class="meter"><div id="pwBar"></div></div>
+    <p id="pwText" class="hint"></p>
+  </div>
+  <div class="card ci">
+    <h3 class="title">Integrity: file hash check</h3>
+    <p class="hint">Choose a file to get its SHA-256 hash. Save the hash, edit the file, choose it again and compare.</p>
+    <input id="file" type="file">
+    <p>Hash: <code id="hash">–</code></p>
+    <input id="oldHash" placeholder="Paste the earlier hash to compare">
+    <p id="hashResult"></p>
+  </div>
+  <div class="card ca">
+    <h3 class="title">Availability: response time check</h3>
+    <div class="row"><input id="url" value="https://example.com"><button id="ping">Check</button></div>
+    <p id="pingResult"></p>
+  </div>
+</section>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
